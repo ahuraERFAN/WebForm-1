@@ -1,0 +1,665 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/*
+===================
+Fonts
+===================
+*/
+@font-face {
+  font-family: "vazir";
+  src: url("../fonts/vazir/Vazir-FD-WOL.woff") format("woff2"),
+    url("../fonts/vazir/Vazir-FD-WOL.woff") format("woff"),
+    url("../fonts/vazir/Vazir-FD-WOL.ttf") format("truetype");
+}
+
+/*
+===================
+Variables
+===================
+*/
+:root {
+  --clr-primary: #e2711d;
+  --clr-primary-light: #ffb627;
+  --clr-gray-1: #102a42;
+  --clr-gray-5: #617d98;
+  --clr-gray-10: #f1f5f8;
+  --clr-white: #fff;
+  --ff-primary: "vazir", sans-serif;
+  --radius: 0.5rem;
+  --transition: all 0.3s linear;
+}
+
+body {
+  font-family: var(--ff-primary);
+  background: var(--clr-white);
+  color: var(--clr-gray-1);
+  text-align: right;
+  font-size: 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 1.75rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+@media screen and (min-width: 800px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+}
+.btn {
+  background: var(--clr-primary);
+  padding: 0.5rem 1rem; /*firt int is for top and buttom second one is for right and left*/
+  border-radius: var(--radius);
+  color: var(--clr-white);
+  transition: var(--transition);
+  display: inline-block;
+}
+
+.btn-banner:hover {
+  background-color: var(--clr-primary-light);
+  color: var(--clr-primary);
+}
+
+.clearfix::after,
+.clearfix::before {
+  content: "";
+  display: block; /*defult way of calling after before is to have both content -empty- and display-block-*/
+  clear: both;
+  /*because our lack of knowlege we use before after as we yet not know about flex-box and grid */
+  /*as of we used float:right if we try to put anything under the feature area it wont go under it as we have to use clear-both- */
+}
+
+.section-center {
+  padding: 4rem 0;
+  width: 85vw;
+  margin: 0 auto;
+  max-width: 1170px;
+}
+
+@media screen and (min-widtrh: 992px) {
+  .section-center {
+    width: 95vw;
+    padding: 4rem 1rem;
+  }
+}
+
+.section-title h3 {
+  color: var(--clr-primary);
+}
+
+.section-title {
+  margin-bottom: 2rem;
+}
+
+/*
+===================
+Animation
+===================
+*/
+/*@keyframe is the tag for animation and the word after that thats the name of that animation like var() you can call it later*/
+@keyframes bounce {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes slideFromTop {
+  0%{
+    transform: translateY(-100px);
+    opacity: 0;
+    /*dont show it*/
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+    /*show it*/
+    /*e.g:   animation: slideFromTop 2s ease-in-out; in header h1 */
+  }
+}
+
+@keyframes slideFromBottom {
+  0%{
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  100%{
+    transform: translateY(0);
+    opacity: 1;
+
+  }
+}
+/*
+===================
+Navbar
+===================
+*/
+.nav-btn{
+  font-size: 1.5rem;
+  color: var(--clr-primary);
+  position: fixed;/*we want to see navbar all the time on the screen so the position must be fixed*/
+  top: 5%;
+  right: 5%;
+  z-index: 1; /*An element with greater stack order is always in front of an element with a lower stack order. thats what the z-index do so it will show above all the things this way css knows navbar is our priority*/
+  cursor: pointer;/*while hovering over the menu pointer cheange as hand with the first finger pull up*/
+  animation: bounce 2s ease infinite;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  right: 0; /*top 0 and right 0 works like direction rtl or ltr*/
+  background: var(--clr-gray-10);
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  box-shadow: 20px 0 2px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+  transform: translateX(100%);/*other meaning of hide*/
+}
+
+.showNav {
+  transform: translate(0);
+}
+
+@media screen and (min-width: 768px) {
+  .navbar{
+    width: 30vw;/*viewport width equivalent  to percentage*/
+    min-width: 20rem;
+  }
+}
+
+
+.navbar-header {
+  text-align: left;
+}
+.nav-close{
+  font-size: 2.5rem;/*size of X */
+  color: #f29c9c;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.nav-close:hover{
+  color: #bb2525;
+
+}
+
+.nav-items {
+  list-style-type: none;/*if margin is zero list style type wont cheange*/
+  direction: rtl;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  color: var(--clr-gray-5);
+  transition: var(--transition);
+}
+
+.nav-link i {
+  font-size: 1.4rem;
+  margin-left: 0.3rem;
+}
+
+.nav-link:hover {
+  background: var(--clr-primary-light);
+  border-right: 0.25rem solid var(--clr-primary);/*good looking part of menu*/
+  padding-right: 1.5rem;
+  color: var(--clr-primary);
+}
+/*
+===================
+Header
+===================
+*/
+.header {
+  height: 100vh;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.2)),
+    url(../images/Header.jpg) center/cover no-repeat fixed;
+  position: relative;
+}
+
+.banner {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.banner h1 {
+  color: var(--clr-primary);
+  margin-bottom: 2rem;
+  animation: slideFromTop 2s ease-in-out 1;
+}
+
+.banner h2 {
+  color: var(--clr-white);
+  margin-bottom: 2rem;
+  animation: slideFromBottom 2s ease-in-out 1;
+}
+
+.btn-banner {
+  font-size: 1.25rem;
+  outline: 0.125rem solid var(--clr-primary);
+  outline-offset: 0.25rem;
+  padding: 0.75rem 1.25rem;
+  animation: slideFromBottom 2s linear 1;
+
+}
+
+/*
+===================
+content-divider
+===================
+*/
+.content-divider {
+  height: 0.5rem;
+  background: linear-gradient(
+    to left,
+    var(--clr-primary),
+    var(--clr-primary-light),
+    var(--clr-primary)
+  );
+}
+
+/*
+===================
+feature
+===================
+*/
+
+.feature {
+  height: 260px;
+  background: var(--clr-gray-10);
+  /*take a note  all the text we have in the section are same text size for example theyre 15 words what if theyre not the same size ? then we have to put height for that part*/
+  text-align: center;
+  padding: 2.5rem 0rem;
+  transition: var(--transition);
+}
+
+.feature:hover {
+  background: var(--clr-white);
+  box-shadow: 0 2px 0 var(--clr-primary); /*first int for x vector second one is for Y vector this one is the opacity*/
+}
+
+.feature-icon:hover,
+.feature:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  color: var(--clr-primary);
+  transition: var(--transition);
+  margin-bottom: 1.25rem; /*span tag is inline*/
+  display: inline-block;
+}
+
+.feature-title {
+  margin-bottom: 1rem;
+}
+
+.feature-text {
+  color: var(--clr-gray-5);
+  max-width: 17rem;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 576px) {
+  .feature {
+    float: right;
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .feature {
+    float: right;
+    width: 25%;
+  }
+}
+
+/*
+===================
+About
+===================
+*/
+.about-img,
+.about-info {
+  padding: 2rem 0;
+}
+
+.about-picture-container {
+  background: var(--clr-gray-5);
+  max-width: 30rem;
+  border: 0.3rem solid var(--clr-primary);
+  border-radius: var(--radius);
+  overflow: hidden; /*as of if we haver over the picture itll pop out the border so we use overflow-hidden-*/
+}
+
+.about-picture {
+  transition: var(--transition);
+}
+
+.about-picture-container:hover .about-picture {
+  opacity: 0.5;
+  transform: scale(1.2);
+}
+
+.about-text {
+  color: var(--clr-gray-5);
+}
+
+.about-btn {
+  margin-top: 1.5rem; /*tag a is inline block*/
+}
+
+@media screen and (min-width: 992px) {
+  .about-img {
+    float: left;
+    width: 50%; /*so it goes to right*/
+  }
+  .about-info {
+    float: right;
+    width: 50%;
+  }
+}
+/*
+===================
+Products
+===================
+*/
+.prodcuts {
+  background: var(--clr-gray-10);
+}
+
+.prodcuts article {
+  padding: 2rem 0;
+  /* take a look at div and articles of products and the way i cheanged the articles and put both of them in a single div*/
+}
+
+.product-text {
+  color: var(--clr-gray-5);
+  /*at this point we need max width as its get bigger and bigger*/
+  max-width: 26rem;
+  /*now the text is on the wrong side so we do this:*/
+  margin-left: auto;
+  /*margin left auto put the text in the asked area which is right*/
+}
+
+.btn-products {
+  margin-top: 1.5rem;
+}
+
+.products-cards .product {
+  margin-bottom: 2rem;
+  /*for the spaces undernis the cards we call parents of products cards*/
+}
+
+.product-img {
+  border-radius: var(--radius);
+  margin-bottom: 1rem; /*space between picture and text -bottom of picture- */
+  height: 17rem;
+  object-fit: cover; /*automaticly fits the img to the desegnited area*/
+}
+
+.product-price {
+  color: var(--clr-primary);
+  direction: rtl;
+  /*if we try direction rtl in the body float will be left*/
+  /*if we want to cheange direction to rtl we better do it in the bigennig as the projects moves and itll get harder and harder to cheange*/
+}
+
+@media screen and (min-width: 768px) {
+  .product {
+    float: right;
+    width: 50%; /*2 cards in a page*/
+    padding-left: 2rem;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .product {
+    width: 33.3%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .products-info {
+    float: right;
+    width: 30%;
+  }
+  .products-cards {
+    float: left;
+    width: 70%;
+  }
+  .product {
+    padding-left: 0;
+    padding-right: 2rem;
+    margin-bottom: 0;
+  }
+}
+/*
+===================
+Services
+===================
+*/
+.services-title{
+  text-align: center;
+}
+
+.service-card{
+  background: var(--clr-gray-10);
+  margin: 2rem 0;/*2rem  is from top and bottom 0 is for right and left*/
+  border-radius: var(--radius);/*for the area of card img , img border wont effect if i want to apply this radius to img i must give border radius to service-img*/
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+}
+
+.service-card:hover{
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+  /*we must use transition to make the hover animation at the desiger point*/
+}
+
+
+/*if you give the border radius to sth and in that sth is an image , the image radius wont cheange so in the buttom we do this :*/
+.service-img{
+  height: 17rem;
+  object-fit: cover; /*without object-fit it wont fit in the size of our box so we need to use objectFit otherwise itll be a mess*/
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+}
+
+.service-info{
+  text-align: center;
+  padding: 3rem 1rem 2.5rem 1rem;
+}
+
+.service-info p{
+  color: var(--clr-gray-5);
+  max-width: 20rem;
+  margin: 1rem auto;
+}
+/* this is line 392 at this point none of our cards works in big screen for using it on big screen we need mediaq and float :*/
+
+@media screen and (min-width:768px) {
+  .service-card{
+    float: right;
+    width: 45%;
+    margin-left: 5%;
+  }
+}
+
+@media screen and (min-width:992px) {
+  .service-card{
+    width: 30%;
+    margin-left: 3.33%;
+  }
+}
+
+.service-img-container {
+  position: relative;
+}
+
+.service-icon {
+  position: absolute; /*child of container -HTML- */
+  left: 50%; /*we just used position but our icon has gone out of card area we use left and bottom*/
+  bottom: 0;
+  font-size: 1.75rem;
+  color: var(--clr-primary);
+  transform: translate(-50%, 50%);/*fit in center*/
+  background: var(--clr-primary-light);
+  padding: 0.5rem 0.7rem 0.1rem 0.7rem;
+  border-radius: 50%; /*make the border circle*/
+  border: 0.375rem solid var(--clr-gray-10);
+}
+
+/*
+===================
+contact us
+===================
+*/
+.contact{
+  background: var(--clr-gray-10);
+}
+
+.contact article {
+  margin: 1rem 0;
+}
+
+.contact-item {
+  margin-bottom: 1.7rem;
+}
+
+.contact-title {
+  color: var(--clr-primary);
+  font-weight: 400;
+  direction: rtl;
+}
+
+.contact-text {
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  background: var(--clr-white);
+  border-radius: var(--radius);
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: var(--transition);
+  max-width: 35rem;
+}
+.contact-form:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-form h3 {
+  color: var(--clr-gray-5);
+  padding-top: 1.25rem;
+}
+
+.form-group{
+  padding: 1rem 1.5rem; /*1rem up and down 1.5rem right and left*/
+}
+
+.form-control{
+  display: block; /*we want all our rows to be in one line*/
+  width: 100%; /*widths must be the parent size -countainer size- so its 100% of its parents size*/
+  margin-bottom: 1.25rem;/*space underneath each form input*/
+  padding: 0.75rem 1rem;/*0.75up and down 1rem right and left -pedding is for inside of our thing -*/
+  border: none;
+  background: var(--clr-gray-10);
+  border-radius: var(--radius);
+  direction: rtl;
+}
+
+.form-control::placeholder{
+  font-family: var(--ff-primary);
+  color: var(--clr-gray-1);
+}
+
+.submit-btn {
+  display: block; /*if we want to give a width it has to cheange to block display otherwise width wont cheange*/
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  font-family: var(--ff-primary);
+}
+
+@media screen and (min-width:992px) {
+  .contact article {
+    float: right;
+    width: 50%;
+  }
+ 
+}
+
+/*
+===================
+Footer
+===================
+*/
+
+.footer {
+  background-color: #222;
+  text-align: center;
+  color: var(--clr-white);
+}
+
+.social-icon {
+  color: var(--clr-white);
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block; /* cause the A tag is displaying at the form of block but in here we want to give it a margin bottom so we need to cheange the display format*/
+  transition: var(--transition);
+}
+.social-icon:hover{
+  color: var(--clr-primary);
+}
+
+.footer-text {
+  font-size: 1.1rem;
+  direction: rtl;
+}
+
+.footer-span {
+  color: var(--clr-primary);
+  font-size: 1.3rem;
+}
